@@ -1,0 +1,13 @@
+{
+  "callbackLanguageCode": "RU",
+  "entry": "Вход",
+  "insertDataToEntry": "Введите данные для входа",
+  "email": "Email",
+  "password": "Пароль",
+  "min": "Мин.",
+  "max": "Макс.",
+  "ms": "м/с",
+  "humidity": "влажность",
+  "wind": "Ветер",
+  "today": "Сегодня"
+}
