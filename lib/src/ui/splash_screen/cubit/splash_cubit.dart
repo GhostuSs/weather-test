@@ -30,7 +30,7 @@ class SplashCubit extends Cubit<SplashState> {
           longtitude: geo.longitude,
         );
         geoName = await GeoService.determineCity(
-            latitude: geo.latitude, longtitude: geo.longitude, applocale: 'ru');
+            latitude: geo.latitude, longtitude: geo.longitude, applocale: 'RU');
         _access = await AuthService().checkAccess();
         await Hive.box<WeatherModel>('weather').put('weather', weather);
       } on Exception catch (e) {

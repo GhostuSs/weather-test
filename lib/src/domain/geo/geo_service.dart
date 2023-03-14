@@ -57,7 +57,6 @@ abstract class GeoService {
       {required double latitude,
       required double longtitude,
       required String applocale}) async {
-    final _dio = Dio();
     final _bodyMap = {
       "lat": latitude,
       "lon": longtitude,
@@ -65,9 +64,10 @@ abstract class GeoService {
       "appId": AppConfig.weatherApiKey
     };
     late final _response;
-    await _dio
+    await Dio()
         .request(BaseUrl.geoUrl, queryParameters: _bodyMap)
         .then((value) => _response = value.data.first);
-    return _response['local_names'][applocale];
+    print(_response);
+    return _response['local_names'][applocale] ?? _response['local_names']['en'];
   }
 }
