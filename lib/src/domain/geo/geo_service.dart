@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:hive/hive.dart';
 import 'package:smartavia_weather/src/domain/appconfig/app_config.dart';
 import 'package:smartavia_weather/src/domain/baseurl/base_url.dart';
 
@@ -8,23 +9,35 @@ abstract class GeoService {
   ///Determine position
   static Future<Position> determinePosition() async {
     bool serviceEnabled = false;
+    final Position _arkhangelsk = Position(
+        longitude:  40.523149,
+        latitude: 64.535579,
+        timestamp: DateTime.now(),
+        accuracy: 0.0,
+        altitude: 0.0,
+        heading: 0.0,
+        speed: 0.0,
+        speedAccuracy: 0.0);
     LocationPermission permission = LocationPermission.denied;
 
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
+      return _arkhangelsk;
     }
 
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
+        return _arkhangelsk;
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      await Geolocator.openLocationSettings();
+      if(Hive.box<bool>('settingsopened').isEmpty)
+        await Geolocator.openLocationSettings().then((value) async => await Hive.box<bool>('settingsopened').put('settingsopened', true));
+      return _arkhangelsk;
+
     }
     return await Geolocator.getCurrentPosition();
   }
@@ -43,12 +56,15 @@ abstract class GeoService {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
+        if(Hive.box<bool>('settingsopened').isEmpty)
+          await Geolocator.openLocationSettings().then((value) => Hive.box<bool>('settingsopened').put('settingsopened', true));
         return Future.error('Location permissions are denied');
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
-      await Geolocator.openLocationSettings();
+      if(Hive.box<bool>('settingsopened').isEmpty)
+        await Geolocator.openLocationSettings().then((value) => Hive.box<bool>('settingsopened').put('settingsopened', true));
     }
     return serviceEnabled;
   }

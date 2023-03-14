@@ -29,6 +29,7 @@ Future<void> main() async {
   Hive.registerAdapter<ShortWeatherModel>(ShortWeatherModelAdapter());
   Hive.registerAdapter<TempModel>(TempModelAdapter());
   await Hive.openBox<WeatherModel>('weather');
+  await Hive.openBox<bool>('settingsopened');
   runApp(
     const App(),
   );
