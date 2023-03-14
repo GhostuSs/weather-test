@@ -3,11 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:smartavia_weather/src/res/app_theme/app_theme.dart';
 import 'package:smartavia_weather/src/ui/auth_screen/cubit/auth_cubit.dart';
 import 'package:smartavia_weather/src/ui/splash_screen/cubit/splash_cubit.dart';
 import 'package:smartavia_weather/src/ui/splash_screen/splash_screen.dart';
-import 'package:get/get.dart';
+
 ///EntryPoint screen
 class App extends StatelessWidget {
   const App({super.key});

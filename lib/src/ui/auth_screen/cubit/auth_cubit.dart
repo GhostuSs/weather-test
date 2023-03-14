@@ -2,10 +2,11 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:regexed_validator/regexed_validator.dart' as regexed;
 import 'package:smartavia_weather/src/domain/geo/geo_service.dart';
 import 'package:smartavia_weather/src/domain/services/auth/okta_auth.dart';
 import 'package:smartavia_weather/src/ui/weather_screen/weather_screen.dart';
-import 'package:regexed_validator/regexed_validator.dart' as regexed;
+
 part 'auth_state.dart';
 
 class AuthCubit extends Cubit<AuthState> {

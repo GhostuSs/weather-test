@@ -10,14 +10,16 @@ class RawTextField extends StatelessWidget {
   final Function(String?)? onValidate;
   final TextInputType? textInputType;
 
-  const RawTextField(
-      {Key? key,
-      required this.controller,
-      required this.label,
-      this.action,
-      this.obscure,
-      this.textInputType, this.errorText, this.onValidate,})
-      : super(key: key);
+  const RawTextField({
+    Key? key,
+    required this.controller,
+    required this.label,
+    this.action,
+    this.obscure,
+    this.textInputType,
+    this.errorText,
+    this.onValidate,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) => TextField(

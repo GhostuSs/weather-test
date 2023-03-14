@@ -7,7 +7,7 @@ class AuthState extends Equatable {
     this.obscurePass = true,
     this.isAuthorizing = false,
     this.emailError = null,
-    this.passError=null,
+    this.passError = null,
   });
 
   String email;
@@ -34,11 +34,6 @@ class AuthState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [
-        email,
-        pass,
-        obscurePass,
-        isAuthorizing,
-    passError,emailError
-      ];
+  List<Object?> get props =>
+      [email, pass, obscurePass, isAuthorizing, passError, emailError];
 }

@@ -68,6 +68,7 @@ abstract class GeoService {
         .request(BaseUrl.geoUrl, queryParameters: _bodyMap)
         .then((value) => _response = value.data.first);
     print(_response);
-    return _response['local_names'][applocale] ?? _response['local_names']['en'];
+    return _response['local_names'][applocale] ??
+        _response['local_names']['en'];
   }
 }
