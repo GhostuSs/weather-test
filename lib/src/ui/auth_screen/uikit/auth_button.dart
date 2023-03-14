@@ -7,7 +7,12 @@ import 'package:smartavia_weather/src/res/colors/app_colors.dart';
 class AuthButton extends StatelessWidget {
   final VoidCallback onTap;
   final bool? isLoadingState;
-  const AuthButton({Key? key, required this.onTap, this.isLoadingState}) : super(key: key);
+
+  const AuthButton({
+    Key? key,
+    required this.onTap,
+    this.isLoadingState,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,15 +21,28 @@ class AuthButton extends StatelessWidget {
       onTap: onTap,
       borderRadius: BorderRadius.circular(24.r),
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 12.h,),
+        padding: EdgeInsets.symmetric(
+          vertical: 12.h,
+        ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(24.r),
           color: AppColors.red,
         ),
         child: Center(
-          child: isLoadingState==true ? SizedBox(height: 20.sp,width: 20.sp,child: const CircularProgressIndicator(color: AppColors.white,),) :Text(applocale.auth,style: AppTypography.body1med.copyWith(
-            color: AppColors.white,
-          ),),
+          child: isLoadingState == true
+              ? SizedBox(
+                  height: 20.sp,
+                  width: 20.sp,
+                  child: const CircularProgressIndicator(
+                    color: AppColors.white,
+                  ),
+                )
+              : Text(
+                  applocale.auth,
+                  style: AppTypography.body1med.copyWith(
+                    color: AppColors.white,
+                  ),
+                ),
         ),
       ),
     );

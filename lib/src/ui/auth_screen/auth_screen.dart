@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:smartavia_weather/generated/assets.dart';
 import 'package:smartavia_weather/src/res/colors/app_colors.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:smartavia_weather/src/ui/auth_screen/cubit/auth_cubit.dart';
 import 'package:smartavia_weather/src/ui/auth_screen/uikit/auth_button.dart';
+import 'package:smartavia_weather/src/ui/auth_screen/uikit/raw_textfield.dart';
 
 class AuthScreen extends StatelessWidget {
   AuthScreen({Key? key}) : super(key: key);
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final _applocale = AppLocalizations.of(context)!;
@@ -44,31 +46,37 @@ class AuthScreen extends StatelessWidget {
               ),
               RawTextField(
                 controller: emailController,
+                onValidate: (v) =>
+                    _bloc.checkEmail(email: emailController.text),
                 textInputType: TextInputType.emailAddress,
-                label: 'Email',
+                label: _applocale.email,
+                errorText: _bloc.state.emailError?.isNotEmpty == true
+                    ? _bloc.state.emailError
+                    : null,
               ),
-              const SizedBox(
-                height: 8,
-              ),
-              RawTextField(
-                controller: passController,
-                obscure: _bloc.state.obscurePass,
-                label: 'Пароль',
-                action: InkWell(
-                  onTap: _bloc.changePassVisibility,
-                  child: SvgPicture.asset(
-                    !_bloc.state.obscurePass
-                        ? Assets.iconsEye
-                        : Assets.iconsEyeoff,
-                    color: AppColors.grape,
+              Padding(
+                padding: const EdgeInsets.only(top: 8, bottom: 48),
+                child: RawTextField(
+                  controller: passController,
+                  obscure: _bloc.state.obscurePass,
+                  onValidate: (v) => _bloc.checkPass(pass: passController.text),
+                  label: _applocale.password,
+                  errorText: _bloc.state.passError?.isNotEmpty == true
+                      ? _bloc.state.passError
+                      : null,
+                  action: InkWell(
+                    onTap: _bloc.changePassVisibility,
+                    child: SvgPicture.asset(
+                      !_bloc.state.obscurePass
+                          ? Assets.iconsEye
+                          : Assets.iconsEyeoff,
+                      color: AppColors.grape,
+                    ),
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 48,
-              ),
               AuthButton(
-                isLoadingState:_bloc.state.isAuthorizing,
+                isLoadingState: _bloc.state.isAuthorizing,
                 onTap: () => _bloc.auth(
                   email: emailController.text,
                   context: context,
@@ -81,33 +89,4 @@ class AuthScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-class RawTextField extends StatelessWidget {
-  final TextEditingController controller;
-  final String label;
-  final Widget? action;
-  final bool? obscure;
-  final TextInputType? textInputType;
-  const RawTextField(
-      {Key? key,
-      required this.controller,
-      required this.label,
-      this.action,
-      this.obscure,
-      this.textInputType})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) => TextField(
-        controller: controller,
-        keyboardType: textInputType,
-        obscureText: obscure ?? false,
-        decoration: InputDecoration(
-            label: Text(
-              label,
-            ),
-            suffix: action,
-            focusColor: AppColors.grape),
-      );
 }

@@ -35,7 +35,8 @@ class HourlyWeatherWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: const EdgeInsets.all(16),
+            padding:
+                EdgeInsets.only(left: 16.w, right: 16.w, top: 16.h, bottom: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -61,8 +62,8 @@ class HourlyWeatherWidget extends StatelessWidget {
             color: AppColors.lightPurple,
           ),
           Container(
-            padding: const EdgeInsets.all(16),
-            constraints: BoxConstraints.expand(height: 142.h),
+            padding: EdgeInsets.all(16.h),
+            constraints: BoxConstraints(minHeight: 142.h, maxHeight: 162.h),
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => _HourWeatherCard(
@@ -95,46 +96,48 @@ class _HourWeatherCard extends StatelessWidget {
     final bool _isCurrHour =
         DateTime.now().difference(_unixToNormal()).inMinutes > 0 &&
             DateTime.now().difference(_unixToNormal()).inMinutes < 60;
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _isCurrHour ? AppColors.selectedPurple : null,
-        border: _isCurrHour
-            ? Border.all(
-                color: AppColors.lightPurple,
-              )
-            : null,
-        borderRadius: BorderRadius.circular(12.r),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            _getTime(),
-            style: AppTypography.body2.copyWith(color: AppColors.white),
-          ),
-          if (_imageSmallPath(main: _description.main!).runtimeType == String)
-            SvgPicture.asset(
-              _imageSmallPath(
-                main: _description.main!,
-                isNightTime: isDay(),
-              )!,
-              width: 32.w,
+    return InkWell(
+      onTap: () => print(_unixToNormal()),
+      child: Container(
+        padding: EdgeInsets.all(16.h),
+        decoration: BoxDecoration(
+          color: _isCurrHour ? AppColors.selectedPurple : null,
+          border: _isCurrHour
+              ? Border.all(
+                  color: AppColors.lightPurple,
+                )
+              : null,
+          borderRadius: BorderRadius.circular(12.r),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              _getTime(),
+              style: AppTypography.body2.copyWith(color: AppColors.white),
             ),
-          Text(
-            '${info.temperature.toCelsius()}º',
-            style: AppTypography.body1med.copyWith(color: AppColors.white),
-          ),
-        ],
+            if (_imageSmallPath(main: _description.main!).runtimeType == String)
+              SvgPicture.asset(
+                _imageSmallPath(
+                  main: _description.main!,
+                  isNightTime: isDay(),
+                )!,
+                height: 32.h,
+              ),
+            Text(
+              '${info.temperature.toCelsius()}º',
+              style: AppTypography.body1med.copyWith(color: AppColors.white),
+            ),
+          ],
+        ),
       ),
     );
   }
 
   ///Convert GMT to Dart DateTime formatt
-  DateTime _unixToNormal({int? dt, bool? prin}) {
-    if (prin == true) print('dt: $dt');
+  DateTime _unixToNormal({int? dt}) {
     return DateTime.fromMillisecondsSinceEpoch((dt ?? info.dtUnix)! * 1000);
   }
 
@@ -146,7 +149,7 @@ class _HourWeatherCard extends StatelessWidget {
   String? _imageSmallPath({required String main, bool? isNightTime}) {
     switch (main) {
       case "Clouds":
-        return isDay() ? Assets.miniCloudMoon : Assets.miniCloudSun;
+        return isDay() ? Assets.miniCloudSun : Assets.miniCloudMoon;
       case "Snow":
         return Assets.miniCloudSnow;
       case "Drizzle":
@@ -162,16 +165,18 @@ class _HourWeatherCard extends StatelessWidget {
   }
 
   bool isDay() {
-    final DateTime _dateTime = _unixToNormal(prin: true);
-    final DateTime _sunset =
-        _unixToNormal(dt: dailyWeather.sunsetUnix, prin: true);
-    final DateTime _sunrise =
-        _unixToNormal(dt: dailyWeather.sunriseUnix, prin: true);
-    print('EREREREr');
-    print(_dateTime);
-    print(_sunset);
-    print(_sunrise);
-    print('asdasdasdasd');
-    return _dateTime.isBefore(_sunset);
+    final DateTime _dateTime = _unixToNormal();
+    final DateTime _sunset = _unixToNormal(
+      dt: dailyWeather.sunsetUnix,
+    );
+    final DateTime _sunrise = _unixToNormal(
+      dt: dailyWeather.sunriseUnix,
+    );
+    final _hours = DateFormat.Hm().format(_dateTime);
+    final _sunrisehours = DateFormat.Hm().format(_sunrise);
+    final _sunsethours = DateFormat.Hm().format(_sunset);
+
+    return _hours.compareTo(_sunsethours).isNegative &&
+        _hours.compareTo(_sunrisehours) >= 0;
   }
 }

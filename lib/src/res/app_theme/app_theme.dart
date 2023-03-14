@@ -4,7 +4,6 @@ import 'package:smartavia_weather/src/res/colors/app_colors.dart';
 
 abstract class AppTheme {
   static ThemeData mainTheme = ThemeData(
-      primarySwatch: Colors.blue,
       textTheme: _TextTheme.textTheme,
       textSelectionTheme: const TextSelectionThemeData(
         cursorColor: AppColors.red,
@@ -26,7 +25,8 @@ abstract class AppTheme {
           ),
         ),
       ),
-      backgroundColor: AppColors.white);
+      backgroundColor: AppColors.white,
+  );
 }
 
 ///TextTheme of the project
