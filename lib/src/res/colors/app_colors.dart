@@ -13,4 +13,6 @@ abstract class AppColors {
   static const Color grape = Color.fromRGBO(51, 0, 114, 1);
   static const Color selectedPurple = Color.fromRGBO(70, 0, 156, 1);
   static const Color lightPurple = Color.fromRGBO(189, 135, 255, 1);
+  static const Color grey = Color.fromRGBO(135, 153, 165, 1);
+  static const Color red = Color.fromRGBO(255, 88, 93, 1);
 }

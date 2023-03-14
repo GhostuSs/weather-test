@@ -1,6 +1,7 @@
 {
   "callbackLanguageCode": "RU",
   "entry": "Вход",
+  "auth": "Войти",
   "insertDataToEntry": "Введите данные для входа",
   "email": "Email",
   "password": "Пароль",
