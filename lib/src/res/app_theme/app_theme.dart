@@ -4,9 +4,29 @@ import 'package:smartavia_weather/src/res/colors/app_colors.dart';
 
 abstract class AppTheme {
   static ThemeData mainTheme = ThemeData(
-      primarySwatch: Colors.blue,
-      textTheme: _TextTheme.textTheme,
-      backgroundColor: AppColors.white);
+    textTheme: _TextTheme.textTheme,
+    textSelectionTheme: const TextSelectionThemeData(
+      cursorColor: AppColors.red,
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      labelStyle: AppTypography.body1.copyWith(
+        color: AppColors.grey,
+      ),
+      enabledBorder: const UnderlineInputBorder(
+        borderSide: BorderSide(
+          color: AppColors.grey,
+          width: 0.5,
+        ),
+      ),
+      focusedBorder: const UnderlineInputBorder(
+        borderSide: BorderSide(
+          color: AppColors.grape,
+          width: 2,
+        ),
+      ),
+    ),
+    backgroundColor: AppColors.white,
+  );
 }
 
 ///TextTheme of the project

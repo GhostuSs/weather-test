@@ -27,14 +27,18 @@ class SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: AppColors.purple,
       body: SafeArea(
-        minimum: const EdgeInsets.symmetric(horizontal: 71),
-        child: Padding(
-          padding: EdgeInsets.only(top: 120.h),
-          child: SvgPicture.asset(
-            Assets.imagesLabel,
-            width: 232.w,
-            height: 58.h,
-          ),
+        minimum: EdgeInsets.symmetric(
+          horizontal: 71.w,
+          vertical: 120.h,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              Assets.imagesLabel,
+              width: MediaQuery.of(context).size.width,
+            ),
+          ],
         ),
       ),
     );

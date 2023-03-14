@@ -25,7 +25,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Разрешите приложению доступ к геопозиции</string>
     <key>NSLocationAlwaysUsageDescription</key>
+    <string>Разрешите приложению доступ к геопозиции</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

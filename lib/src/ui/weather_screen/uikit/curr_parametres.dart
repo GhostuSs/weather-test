@@ -18,7 +18,7 @@ class CurrentParametres extends StatelessWidget {
     final _currWeather = WeatherInfoModel.fromJson(weather.current);
     final applocale = AppLocalizations.of(context)!;
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.all(16.h),
       decoration: BoxDecoration(
         color: AppColors.grape,
         borderRadius: BorderRadius.circular(20.r),

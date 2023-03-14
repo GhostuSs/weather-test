@@ -33,7 +33,7 @@ class CurrWeather extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
-          constraints: BoxConstraints.expand(width: 180.w, height: 180.w),
+          constraints: BoxConstraints.expand(width: 180.w, height: 180.h),
           child: Container(
             decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: [
               BoxShadow(
@@ -54,7 +54,7 @@ class CurrWeather extends StatelessWidget {
         Text(
           "${_currWeather.temperature.toCelsius()}º",
           style: _textTheme.headlineMedium?.copyWith(
-            fontSize: 64.sp,
+            fontSize: 63.sp,
             color: AppColors.white,
           ),
         ),
